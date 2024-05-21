@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01_Houses</title>
+    <style>
+        * {
+            margin: 10px;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px auto;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h3 style="text-align: justify;">Q]The Magical Sorting Hat: Imagine you are creating a magical sorting hat for a
+        wizard school. Implement a
+        JavaScript function that takes an array of student names and assigns them to one of the four houses (Gryffindor
+        (length less than 6), Hufflepuff(length less than 8), Ravenclaw(length less than 12), or Slytherin(length
+        greater than or equal to 12)) based on the length of their names.</h3>
+
+    <table id="House_Table">
+        <thead>
+            <tr>
+                <th>Students</th>
+                <th>Houses</th>
+            </tr>
+        </thead>
+
+        <tbody></tbody>
+    </table>
+
+    <script>
+
+        let table_body = document.querySelector('#House_Table tbody');
+        function insert_table_values(name, house) {
+            let td1 = document.createElement('td');
+            td1.textContent = name;
+            let td2 = document.createElement('td');
+            td2.textContent = house;
+            let tr = document.createElement('tr');
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            table_body.appendChild(tr);
+        }
+
+        let obj = {
+            Gryffindor: [],
+            Hupplepuff: [],
+            Ravenclaw: [],
+            Slytherin: []
+        }
+
+        const names = ["Liam", "Olivia", "Ava", "Noah", "Emma", "Ethan", "Sophia", "James", "Mia", "Mason", "Isabella", "Logan", "Amelia", "Lucas", "Harper", "Benjamin", "Evelyn", "Alexander", "Charlotte", "Henry", "Abigail", "Sebastian", "Lily", "Elijah", "Grace"];
+
+        names.forEach(name => {
+            if (name.length < 6) {
+                obj.Gryffindor.push(name);
+                insert_table_values(name, 'Gryffindor');
+            } else if (name.length < 8) {
+                obj.Hupplepuff.push(name);
+                insert_table_values(name, 'Hupplepuff');
+            } else if (name.length < 12) {
+                obj.Ravenclaw.push(name);
+                insert_table_values(name, 'Ravenclaw');
+            } else {
+                obj.Slytherin.push(name);
+                insert_table_values(name, 'Slytherin');
+            }
+        });
+
+        console.log(table_body.parentElement);
+        console.log(obj);
+    </script>
+</body>
+
+</html>

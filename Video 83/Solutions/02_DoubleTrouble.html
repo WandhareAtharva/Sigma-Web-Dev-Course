@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02 Double Trouble | JS Practice</title>
+    <style>
+        * {
+            margin: 10px;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>The Double Trouble: You are tasked with writing a function that doubles each element in an array. However,
+        there's a catch: if the array contains consecutive duplicate elements, only double one of them.</h3>
+
+    <script>
+        const arr = [1, 2, 3, 3, 4, 8, 5, 5, 10];
+        console.log(arr);
+        let newarr = [];
+        for (let i = 0; i < arr.length - 1; i++) {
+            const e1 = arr[i];
+            const e2 = arr[i + 1];
+            
+            if (e1 === e2) {
+                newarr.push(e1);
+                newarr.push(e1);
+                newarr.push(e1);
+            }
+            // else {
+            //     newarr.push(e1);
+                // newarr.push(e1);
+                // newarr.push(e2);
+            //     newarr.push(e2);
+            // }
+        }
+        
+        console.log(newarr);
+    </script>
+</body>
+
+</html>
