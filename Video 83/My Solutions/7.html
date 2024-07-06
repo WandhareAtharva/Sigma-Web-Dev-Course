@@ -1,0 +1,197 @@
+<!-- The Local Storage Manager: You are working on a note-taking app, and you want to implement a function named saveNoteToLocalStorage that takes a note object and saves it to the browser's local storage. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Notes |</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 1rem 0px;
+        }
+
+        hr {
+            margin: auto;
+            width: 60%;
+        }
+
+        #note-form {
+            width: 600px;
+            margin: 1rem auto;
+            padding: 1.5rem;
+            border: 2px solid #004bff;
+            border-top: 32px solid #004bff;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .heading {
+            position: absolute;
+            top: -25px;
+            color: white;
+        }
+
+        .title-input,
+        .note-input {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        input[type='submit'] {
+            padding: 0.4rem;
+            font-size: 1rem;
+            font-weight: bold;
+            background: #004bff;
+            color: white;
+            border: none;
+            transition: background 0.3s;
+        }
+
+        input[type='submit']:hover {
+            background: #0077ff;
+        }
+
+        #title,
+        #note {
+            padding: 1rem;
+        }
+
+        #notes {
+            width: 800px;
+            border: 2px solid #00d9ff;
+            border-top: 32px solid #00d9ff;
+            margin: 1rem auto;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        #note-list {
+            list-style: none;
+        }
+
+        .noteListItem {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1rem 0px;
+            padding: 1rem;
+            border: 1px solid;
+            border-radius: 0.5rem;
+        }
+
+        .title {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .note {
+            line-height: 1.5rem;
+            font-weight: lighter;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>My Notes</h1>
+    <hr>
+    <form id="note-form">
+        <strong class="heading">Add Notes</strong>
+        <div class="title-input">
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="title" placeholder="Enter Title" required>
+        </div>
+        <div class="note-input">
+            <label for="note">Add Note:</label>
+            <textarea name="note" id="note" placeholder="Enter your Note" rows="5" required></textarea>
+        </div>
+        <input type="submit" value="ADD NOTE">
+    </form>
+
+    <div id="notes">
+        <strong class="heading">My Notes</strong>
+        <ul id="note-list"></ul>
+    </div>
+
+    <script>
+
+        function saveNoteToLocalStorage(obj) {
+            if (obj.title == '' || obj.note == '') {
+                return;
+            }
+            const regex = /[:AMP]/g;
+            const key = `note_${obj.time.split(/\s/).join("").replace(regex, '')}`;
+            localStorage.setItem(key, JSON.stringify(obj));
+            return key;
+        }
+
+        function displayNotes() {
+            const list = document.getElementById('note-list');
+            list.innerHTML = '';
+            for (let i = 0; i < localStorage.length; i++) {
+                const item = localStorage.key(i);
+                if (item.startsWith('note_')) {
+                    const obj = JSON.parse(localStorage.getItem(item));
+                    list.innerHTML += `<li class="noteListItem">
+                                            <div class="title"><strong>Title: </strong>${obj.title}</div>
+                                            <div class="note">${obj.note}</div>
+                                        </li>`
+                }
+            }
+        }
+
+        displayNotes();
+
+        let form = document.getElementById('note-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const title = document.getElementById('title').value;
+            const note = document.getElementById('note').value;
+            const date = new Date().toLocaleDateString();
+            const time = new Date().toLocaleTimeString();
+            console.log(title, note, date, time);
+
+            const obj = {
+                title: title,
+                note: note,
+                date: date,
+                time: time,
+            }
+
+            const key = saveNoteToLocalStorage(obj);
+            alert(`Note Added with key: ${key}`);
+            form.reset();
+
+            displayNotes();
+        });
+
+    </script>
+</body>
+
+</html>

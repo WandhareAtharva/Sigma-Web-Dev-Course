@@ -1,0 +1,61 @@
+<!-- The Window Scroller: You are developing a single-page application with a smooth scrolling effect. Implement a function named smoothScrollToTop that smoothly scrolls the window to the top when called. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smooth Scroller</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            /* scroll-behavior: smooth; */
+        }
+
+        .container {
+            margin: 1rem;
+            height: 1500vh;
+            position: relative;
+            border: 1px solid;
+        }
+
+        #goToTopButton {
+            width: 2rem;
+            height: 2rem;
+            background: #004bff;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a id="goToTopButton">&#11181;</a>
+    </div>
+
+    <script>
+        let button = document.getElementById('goToTopButton');
+        button.addEventListener('click', () => {
+            const Y = window.scrollY;
+            let screenPercentage = 0.7
+            for (let i = 0; i < Y * screenPercentage; i++) {
+                const j = i * 0.1;
+                new Promise(r => setTimeout(r, j)).then(() => window.scrollBy(0, -1))
+            }
+            for (let i = 0; i < Y * (1 - screenPercentage); i++) {
+                const j = i * 0.4;
+                new Promise(r => setTimeout(r, j)).then(() => window.scrollBy(0, -1))
+            }
+        });
+    </script>
+</body>
+
+</html>

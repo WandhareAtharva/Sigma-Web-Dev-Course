@@ -23,4 +23,4 @@ class User {
   console.log(user.name); // John
   
   user.name = "Harry" // Name is too short.
-  console.log(user.name)
+  console.log(user.name) 
